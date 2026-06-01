@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Zorg Onderzoek</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+--bg:#0f172a;
+--card:#111827;
+--card2:#1e293b;
+--primary:#3b82f6;
+--primary2:#2563eb;
+--success:#22c55e;
+--danger:#ef4444;
+--warning:#f59e0b;
+--text:#f8fafc;
+--muted:#94a3b8;
+--border:rgba(255,255,255,.08);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:
+radial-gradient(circle at top left,#60a5fa 0%,transparent 30%),
+radial-gradient(circle at bottom right,#a78bfa 0%,transparent 30%),
+linear-gradient(135deg,#dbeafe,#c7d2fe);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px 20px;
+overflow:auto;
+}
+
+/* PHONE */
+
+.phone{
+width:430px;
+height:850px;
+background:rgba(17,24,39,.92);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.1);
+border-radius:42px;
+padding:16px;
+position:relative;
+overflow:hidden;
+box-shadow:
+0 25px 80px rgba(0,0,0,.35),
+inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* NOTCH */
+
+.notch{
+position:absolute;
+top:14px;
+left:50%;
+transform:translateX(-50%);
+width:170px;
+height:34px;
+background:#020617;
+border-radius:30px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+z-index:500;
+}
+
+.camera{
+width:14px;
+height:14px;
+border-radius:50%;
+background:#111827;
+border:2px solid #1e293b;
+}
+
+.speaker{
+width:70px;
+height:8px;
+border-radius:20px;
+background:#1e293b;
+}
+
+/* SCREEN */
+
+.screen{
+height:100%;
+border-radius:30px;
+padding:65px 20px 20px;
+display:flex;
+flex-direction:column;
+background:
+linear-gradient(180deg,
+rgba(30,41,59,.95),
+rgba(15,23,42,.96));
+position:relative;
+overflow-y:auto;
+overflow-x:hidden;
+scrollbar-width:none;
+}
+
+.screen::-webkit-scrollbar{
+display:none;
+}
+
+/* STATUS */
+
+.status{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+color:var(--muted);
+font-size:13px;
+font-weight:600;
+}
+
+/* HEADER */
+
+.header{
+background:
+linear-gradient(135deg,
+rgba(59,130,246,.95),
+rgba(37,99,235,.9));
+border-radius:28px;
+padding:22px;
+position:relative;
+overflow:hidden;
+box-shadow:0 15px 35px rgba(37,99,235,.25);
+}
+
+.header::before{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(255,255,255,.08);
+border-radius:50%;
+top:-100px;
+right:-70px;
+}
+
+.header small{
+display:block;
+font-size:13px;
+letter-spacing:.5px;
+text-transform:uppercase;
+opacity:.85;
+margin-bottom:8px;
+color:white;
+}
+
+.header h1{
+font-size:28px;
+font-weight:800;
+color:white;
+line-height:1.1;
+}
+
+.header p{
+margin-top:10px;
+color:rgba(255,255,255,.85);
+line-height:1.5;
+font-size:14px;
+}
+
+/* INFO */
+
+.info{
+margin-top:18px;
+background:rgba(255,255,255,.05);
+border:1px solid var(--border);
+padding:18px;
+border-radius:22px;
+color:var(--text);
+line-height:1.6;
+font-size:14px;
+}
+
+/* SECTION */
+
+.sectionTitle{
+margin-top:24px;
+margin-bottom:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.sectionTitle h2{
+color:white;
+font-size:18px;
+font-weight:700;
+}
+
+.sectionTitle span{
+color:var(--muted);
+font-size:13px;
+}
+
+/* APPS */
+
+.apps{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:16px;
+}
+
+.app{
+position:relative;
+height:120px;
+border-radius:26px;
+padding:18px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+transition:.25s ease;
+overflow:hidden;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.app:hover{
+transform:translateY(-4px);
+}
+
+.appTop{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+}
+
+.icon{
+width:48px;
+height:48px;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+background:rgba(255,255,255,.12);
+}
+
+.statusDot{
+width:10px;
+height:10px;
+border-radius:50%;
+background:#22c55e;
+box-shadow:0 0 10px #22c55e;
+}
+
+.app h3{
+font-size:15px;
+font-weight:700;
+color:white;
+}
+
+.app p{
+font-size:12px;
+color:rgba(255,255,255,.75);
+margin-top:4px;
+}
+
+.unlocked{
+background:
+linear-gradient(135deg,
+#2563eb,
+#1d4ed8);
+cursor:pointer;
+}
+
+.locked{
+background:
+linear-gradient(135deg,
+#1e293b,
+#0f172a);
+opacity:.7;
+cursor:not-allowed;
+}
+
+.locked .statusDot{
+background:#64748b;
+box-shadow:none;
+}
+
+.locked::after{
+content:"🔒";
+position:absolute;
+right:16px;
+bottom:16px;
+font-size:22px;
+}
+
+.done{
+background:
+linear-gradient(135deg,
+#16a34a,
+#15803d);
+cursor:default;
+}
+
+.done::after{
+content:"✓";
+position:absolute;
+right:18px;
+bottom:14px;
+font-size:24px;
+font-weight:800;
+color:white;
+}
+
+/* TIMER */
+
+.timerBox{
+margin-top:20px;
+background:rgba(255,255,255,.05);
+border:1px solid var(--border);
+border-radius:26px;
+padding:22px;
+text-align:center;
+}
+
+.timerLabel{
+font-size:13px;
+letter-spacing:.4px;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:8px;
+}
+
+.timer{
+font-size:54px;
+font-weight:800;
+color:white;
+letter-spacing:2px;
+}
+
+.timerSub{
+margin-top:8px;
+color:#22c55e;
+font-size:14px;
+font-weight:600;
+}
+
+/* POPUP */
+
+.popup{
+position:absolute;
+inset:0;
+background:
+linear-gradient(180deg,
+rgba(15,23,42,.98),
+rgba(2,6,23,.98));
+padding:90px 24px 24px;
+display:none;
+flex-direction:column;
+overflow-y:auto;
+overflow-x:hidden;
+z-index:999;
+scroll-behavior:smooth;
+}
+
+.popup::-webkit-scrollbar{
+display:none;
+}
+
+.popupHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:24px;
+}
+
+.popup h2{
+color:white;
+font-size:30px;
+font-weight:800;
+}
+
+.closeSmall{
+width:42px;
+height:42px;
+border-radius:14px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+.popupContent{
+background:rgba(255,255,255,.04);
+border:1px solid var(--border);
+padding:22px;
+border-radius:24px;
+color:#e2e8f0;
+line-height:1.8;
+font-size:15px;
+}
+
+.popupContent ul{
+padding-left:20px;
+margin:14px 0;
+}
+
+.popupContent table{
+width:100%;
+border-collapse:collapse;
+margin-top:16px;
+}
+
+.popupContent td{
+padding:14px;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.answer{
+margin-top:22px;
+width:100%;
+padding:18px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.05);
+color:white;
+font-size:16px;
+outline:none;
+}
+
+.answer:focus{
+border-color:#3b82f6;
+}
+
+.buttons{
+display:flex;
+gap:12px;
+margin-top:18px;
+}
+
+.button{
+flex:1;
+padding:16px;
+border:none;
+border-radius:18px;
+font-size:15px;
+font-weight:700;
+cursor:pointer;
+}
+
+.green{
+background:linear-gradient(135deg,#22c55e,#16a34a);
+color:white;
+}
+
+.red{
+background:rgba(255,255,255,.06);
+color:white;
+border:1px solid rgba(255,255,255,.08);
+}
+
+/* START */
+
+.startScreen,
+.endScreen{
+position:absolute;
+inset:0;
+background:
+linear-gradient(180deg,
+rgba(2,6,23,.96),
+rgba(15,23,42,.98));
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+z-index:2000;
+}
+
+.endScreen{
+display:none;
+}
+
+.startScreen h1,
+.endScreen h1{
+font-size:42px;
+font-weight:800;
+color:white;
+margin-bottom:18px;
+}
+
+.startScreen p,
+.endScreen p{
+color:#cbd5e1;
+line-height:1.8;
+max-width:320px;
+font-size:15px;
+}
+
+.startBtn{
+margin-top:30px;
+padding:18px 28px;
+border:none;
+border-radius:22px;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+background:
+linear-gradient(135deg,
+#3b82f6,
+#2563eb);
+color:white;
+}
+
+/* BONUS */
+
+.bonus{
+position:absolute;
+top:110px;
+left:50%;
+transform:translateX(-50%);
+background:
+linear-gradient(135deg,
+#22c55e,
+#16a34a);
+padding:16px 24px;
+border-radius:20px;
+font-weight:800;
+color:white;
+font-size:20px;
+display:none;
+z-index:5000;
+animation:bonusAnim 2s forwards;
+}
+
+@keyframes bonusAnim{
+
+0%{
+opacity:0;
+transform:translateX(-50%) translateY(-10px) scale(.8);
+}
+
+20%{
+opacity:1;
+transform:translateX(-50%) translateY(0) scale(1);
+}
+
+80%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+transform:translateX(-50%) translateY(-10px) scale(.9);
+}
+
+}
+
+.complete{
+margin-top:18px;
+padding:18px;
+border-radius:22px;
+background:
+linear-gradient(135deg,
+rgba(34,197,94,.18),
+rgba(22,163,74,.12));
+border:1px solid rgba(34,197,94,.25);
+color:#bbf7d0;
+font-weight:700;
+text-align:center;
+display:none;
+}
+
+html{
+scroll-behavior:smooth;
+}
+@media (max-width: 768px){
+
+    body{
+        padding:0;
+        background:
+        linear-gradient(
+        180deg,
+        rgba(30,41,59,.98),
+        rgba(15,23,42,1)
+        );
+    }
+
+    .phone{
+        width:100vw;
+        height:100vh;
+        border-radius:0;
+        padding:0;
+        border:none;
+        box-shadow:none;
+    }
+
+    .screen{
+        border-radius:0;
+        padding:65px 16px 20px;
+    }
+
+    .popup,
+    .startScreen,
+    .endScreen{
+        border-radius:0;
+    }
+
+    .notch{
+        top:10px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="notch">
+<div class="camera"></div>
+<div class="speaker"></div>
+</div>
+
+<div class="bonus" id="bonus">
++30 seconden
+</div>
+
+<div class="startScreen" id="start">
+
+<h1>Zorg Onderzoek</h1>
+
+<p>
+Een bewoner voelt zich plotseling niet goed.
+Werk samen en ontdek wat er aan de hand is.
+</p>
+
+<button class="startBtn" onclick="startGame()">
+Start onderzoek
+</button>
+
+</div>
+
+<div class="endScreen" id="end">
+
+<h1>Tijd voorbij</h1>
+
+<p>
+Jullie hebben het onderzoek niet op tijd afgerond.
+</p>
+
+<button class="startBtn" onclick="continueWithoutTimer()">
+Doorgaan
+</button>
+
+</div>
+
+<div class="popup" id="popup">
+
+<div class="popupHeader">
+
+<h2 id="title"></h2>
+
+<div class="closeSmall" onclick="closePopup()">
+✕
+</div>
+
+</div>
+
+<div class="popupContent" id="content"></div>
+
+<input
+class="answer"
+id="answer"
+placeholder="Typ je antwoord..."
+>
+
+<div class="buttons">
+
+<button class="button green" onclick="checkAnswer()">
+Controleer
+</button>
+
+<button class="button red" onclick="closePopup()">
+Sluiten
+</button>
+
+</div>
+
+</div>
+
+<div class="screen">
+
+<div class="status">
+<span>09:41</span>
+<span>🔋 92%</span>
+</div>
+
+<div class="header">
+
+<small>Zorg Systeem</small>
+
+<h1>Zorg Onderzoek</h1>
+
+<p>
+Controleer de situatie en handel op tijd.
+</p>
+
+</div>
+
+<div class="info">
+Beantwoord vragen goed om nieuwe apps vrij te spelen en extra tijd te krijgen.
+</div>
+
+<div class="sectionTitle">
+
+<h2>Onderzoek Apps</h2>
+
+<span>6 modules</span>
+
+</div>
+
+<div class="apps">
+
+<div class="app unlocked" id="app1" onclick="openApp(1)">
+
+<div class="appTop">
+<div class="icon">💬</div>
+<div class="statusDot"></div>
+</div>
+
+<div>
+<h3>Berichten</h3>
+<p>Nieuwe meldingen</p>
+</div>
+
+</div>
+
+<div class="app locked" id="app2">
+
+<div class="appTop">
+<div class="icon">💊</div>
+<div class="statusDot"></div>
+</div>
+
+<div>
+<h3>Medicatie</h3>
+<p>Vergrendeld</p>
+</div>
+
+</div>
+
+<div class="app locked" id="app3">
+
+<div class="appTop">
+<div class="icon">📅</div>
+<div class="statusDot"></div>
+</div>
+
+<div>
+<h3>Planning</h3>
+<p>Vergrendeld</p>
+</div>
+
+</div>
+
+<div class="app locked" id="app4">
+
+<div class="appTop">
+<div class="icon">📋</div>
+<div class="statusDot"></div>
+</div>
+
+<div>
+<h3>Dossier</h3>
+<p>Vergrendeld</p>
+</div>
+
+</div>
+
+<div class="app locked" id="app5">
+
+<div class="appTop">
+<div class="icon">🚨</div>
+<div class="statusDot"></div>
+</div>
+
+<div>
+<h3>Alarm</h3>
+<p>Vergrendeld</p>
+</div>
+
+</div>
+
+<div class="app locked" id="app6">
+
+<div class="appTop">
+<div class="icon">📝</div>
+<div class="statusDot"></div>
+</div>
+
+<div>
+<h3>Rapportage</h3>
+<p>Vergrendeld</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="complete" id="complete">
+Onderzoek succesvol afgerond.
+</div>
+
+<div class="timerBox">
+
+<div class="timerLabel">
+Resterende tijd
+</div>
+
+<div class="timer" id="timer">
+10:00
+</div>
+
+<div class="timerSub">
+Elke goede vraag = +30 seconden
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let currentApp = 0;
+
+let time = 600;
+let timerInterval;
+let timerActive = true;
+
+function startGame(){
+
+document.getElementById("start").style.display = "none";
+
+timerInterval = setInterval(updateTimer,1000);
+
+}
+
+function updateTimer(){
+
+if(!timerActive) return;
+
+time--;
+
+let minutes = Math.floor(time / 60);
+let seconds = time % 60;
+
+document.getElementById("timer").innerText =
+`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+if(time <= 0){
+
+clearInterval(timerInterval);
+
+document.getElementById("end").style.display = "flex";
+
+}
+
+}
+
+function addTime(){
+
+time += 30;
+
+document.getElementById("bonus").style.display = "block";
+
+setTimeout(()=>{
+
+document.getElementById("bonus").style.display = "none";
+
+},2000);
+
+}
+
+function continueWithoutTimer(){
+
+timerActive = false;
+
+document.getElementById("timer").innerText = "∞";
+
+document.getElementById("end").style.display = "none";
+
+}
+
+function openApp(app){
+
+let element = document.getElementById("app"+app);
+
+if(element.classList.contains("done")) return;
+
+currentApp = app;
+
+document.getElementById("popup").style.display = "flex";
+
+if(app === 1){
+
+document.getElementById("title").innerText = "Berichten";
+
+document.getElementById("content").innerHTML = `
+
+<p>
+08:12 — Thijmen:<br>
+“Sam ziet bleek vandaag.”
+</p>
+
+<br>
+
+<p>
+08:20 — Thijmen:<br>
+“Sam trilt en voelt zich duizelig.”
+</p>
+
+<br>
+
+<p>
+08:23 — Daan:<br>
+“Controleer eerst belangrijke waardes.”
+</p>
+
+<br>
+
+<p><strong>Vraag:</strong><br>
+Welke controle moet uitgevoerd worden?
+</p>
+
+`;
+
+}
+
+if(app === 2){
+
+document.getElementById("title").innerText = "Medicatie";
+
+document.getElementById("content").innerHTML = `
+
+<ul>
+<li>07:00 — Diabetesmedicatie</li>
+<li>08:00 — Ontbijt gepland</li>
+<li>08:15 — Extra drinken</li>
+</ul>
+
+<br>
+
+<p>
+Het ontbijt staat nog op tafel.
+</p>
+
+<p><strong>Vraag:</strong><br>
+Wat denk je dat er aan de hand is?
+</p>
+
+`;
+
+}
+
+if(app === 3){
+
+document.getElementById("title").innerText = "Planning";
+
+document.getElementById("content").innerHTML = `
+
+<table>
+
+<tr>
+<td>09:00</td>
+<td>Koffie uitdelen</td>
+</tr>
+
+<tr>
+<td>09:05</td>
+<td>Controle uitvoeren</td>
+</tr>
+
+<tr>
+<td>09:10</td>
+<td>Arts terugbellen</td>
+</tr>
+
+</table>
+
+<br>
+
+<p><strong>Vraag:</strong><br>
+Welke taak heeft prioriteit?
+</p>
+
+`;
+
+}
+
+if(app === 4){
+
+document.getElementById("title").innerText = "Dossier";
+
+document.getElementById("content").innerHTML = `
+
+<ul>
+<li>Reageert langzaam</li>
+<li>Koude handen</li>
+<li>Zweet zichtbaar</li>
+</ul>
+
+<br>
+
+<p><strong>Vraag:</strong><br>
+Noem een waarschuwingssignaal.
+</p>
+
+`;
+
+}
+
+if(app === 5){
+
+document.getElementById("title").innerText = "Alarm";
+
+document.getElementById("content").innerHTML = `
+
+<h1 style="font-size:48px;color:#ef4444;">
+3.0 mmol/L
+</h1>
+
+<br>
+
+<p>
+Sam reageert steeds langzamer.
+</p>
+
+<p><strong>Vraag:</strong><br>
+Is direct handelen nodig?
+</p>
+
+`;
+
+}
+
+if(app === 6){
+
+document.getElementById("title").innerText = "Rapportage";
+
+document.getElementById("content").innerHTML = `
+
+<p>
+Na suiker voelde Sam zich rustiger.
+</p>
+
+<br>
+
+<p><strong>Vraag:</strong><br>
+Waarom is snelle hulp belangrijk?
+</p>
+
+`;
+
+}
+
+}
+
+function lijktOp(input,lijst){
+
+input = input.toLowerCase();
+
+for(let woord of lijst){
+
+woord = woord.toLowerCase();
+
+if(input.includes(woord)){
+return true;
+}
+
+}
+
+return false;
+
+}
+
+function checkAnswer(){
+
+let input =
+document.getElementById("answer")
+.value
+.toLowerCase();
+
+if(currentApp === 1){
+
+if(lijktOp(input,[
+"bloedsuiker",
+"glucose",
+"suiker"
+])){
+completeApp(1,2);
+}
+
+}
+
+if(currentApp === 2){
+
+if(lijktOp(input,[
+"hypo",
+"lage bloedsuiker",
+"hypoglykemie"
+])){
+completeApp(2,3);
+}
+
+}
+
+if(currentApp === 3){
+
+if(lijktOp(input,[
+"controle",
+"bloedsuiker",
+"meten"
+])){
+completeApp(3,4);
+}
+
+}
+
+if(currentApp === 4){
+
+if(lijktOp(input,[
+"zweten",
+"duizelig",
+"trillen",
+"bleek"
+])){
+completeApp(4,5);
+}
+
+}
+
+if(currentApp === 5){
+
+if(lijktOp(input,[
+"ja",
+"direct",
+"gevaarlijk"
+])){
+completeApp(5,6);
+}
+
+}
+
+if(currentApp === 6){
+
+if(lijktOp(input,[
+"gevaar",
+"schade",
+"hersenen",
+"bewusteloos"
+])){
+
+document.getElementById("complete").style.display = "block";
+
+completeApp(6,null);
+
+}
+
+}
+
+}
+
+function completeApp(current,next){
+
+closePopup();
+
+addTime();
+
+let currentElement =
+document.getElementById("app"+current);
+
+currentElement.classList.remove("unlocked");
+
+currentElement.classList.add("done");
+
+currentElement.onclick = null;
+
+if(next){
+
+let nextElement =
+document.getElementById("app"+next);
+
+nextElement.classList.remove("locked");
+
+nextElement.classList.add("unlocked");
+
+nextElement.setAttribute(
+"onclick",
+"openApp("+next+")"
+);
+
+}
+
+}
+
+function closePopup(){
+
+document.getElementById("popup").style.display = "none";
+
+document.getElementById("answer").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
