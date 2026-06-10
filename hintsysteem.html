@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7c3aed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+
+<title>Zorg Hintsysteem</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+body{
+background:#eef2f7;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100dvh;
+padding:10px;
+}
+
+/* APP CONTAINER */
+
+.phone{
+width:100%;
+max-width:420px;
+height:95dvh;
+max-height:860px;
+background:#ffffff;
+border-radius:40px;
+overflow:hidden;
+box-shadow:0 20px 60px rgba(0,0,0,.12);
+position:relative;
+display:flex;
+flex-direction:column;
+color:#1e293b;
+}
+
+/* NOTCH */
+
+.notch{
+position:absolute;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+width:160px;
+height:30px;
+background:#dbe4ee;
+border-radius:20px;
+z-index:5;
+}
+
+/* HEADER */
+
+.header{
+padding:70px 24px 24px;
+background:linear-gradient(135deg,#7c3aed,#6366f1);
+color:white;
+border-radius:0 0 28px 28px;
+}
+
+.header h1{
+font-size:24px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.header p{
+font-size:14px;
+line-height:1.6;
+opacity:.95;
+}
+
+/* LIST */
+
+.list{
+flex:1;
+padding:18px;
+display:flex;
+flex-direction:column;
+gap:14px;
+overflow-y:auto;
+background:#f8fafc;
+-webkit-overflow-scrolling:touch;
+}
+
+/* CARD */
+
+.card{
+background:white;
+border:1px solid #e2e8f0;
+border-radius:18px;
+padding:18px;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 4px 12px rgba(0,0,0,.04);
+}
+
+.card:hover{
+transform:translateY(-2px);
+border-color:#8b5cf6;
+box-shadow:0 10px 25px rgba(124,58,237,.12);
+}
+
+.card h3{
+font-size:16px;
+margin-bottom:6px;
+color:#4f46e5;
+}
+
+.card p{
+font-size:14px;
+color:#64748b;
+}
+
+/* POPUP */
+
+.popup{
+position:absolute;
+inset:0;
+background:#f8fafc;
+display:none;
+flex-direction:column;
+padding:20px;
+z-index:20;
+overflow-y:auto;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:50px;
+gap:12px;
+}
+
+.top h2{
+font-size:22px;
+font-weight:700;
+color:#1e293b;
+}
+
+.back{
+background:#7c3aed;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+transition:.2s;
+}
+
+.back:hover{
+opacity:.9;
+}
+
+.box{
+margin-top:22px;
+background:white;
+padding:22px;
+border-radius:20px;
+border:1px solid #e2e8f0;
+line-height:1.9;
+font-size:15px;
+color:#475569;
+box-shadow:0 6px 20px rgba(0,0,0,.05);
+}
+
+/* MOBILE */
+
+@media (max-width:480px){
+
+body{
+padding:0;
+}
+
+.phone{
+max-width:none;
+height:100dvh;
+max-height:none;
+border-radius:0;
+}
+
+.notch{
+display:none;
+}
+
+.header{
+padding-top:55px;
+}
+
+.top{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.back{
+width:100%;
+}
+
+.box{
+font-size:16px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="notch"></div>
+
+<div class="header">
+<h1>Hintsysteem</h1>
+<p>
+Gebruik de aanwijzingen zorgvuldig tijdens het onderzoek.
+Elke hint biedt extra context en helpt je stap voor stap
+tot een onderbouwde conclusie te komen.
+</p>
+</div>
+
+<div class="list" id="list"></div>
+
+<div class="popup" id="popup">
+
+<div class="top">
+<h2 id="title"></h2>
+<button class="back" onclick="closeHint()">← Terug</button>
+</div>
+
+<div class="box" id="content"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const hints = [
+
+{
+t:"Observaties",
+h:"Bij veranderingen in gedrag of welzijn is het verstandig om eerst na te gaan welke directe lichamelijke oorzaken een rol kunnen spelen. Let daarbij niet alleen op wat iemand vertelt, maar ook op subtiele signalen die zichtbaar zijn tijdens observatie."
+},
+
+{
+t:"Voeding en behandeling",
+h:"Soms ontstaat een situatie niet door één oorzaak, maar door een combinatie van omstandigheden. Denk aan recente maaltijden, dagelijkse gewoonten en eventuele behandelingen die eerder op de dag hebben plaatsgevonden."
+},
+
+{
+t:"Prioriteiten stellen",
+h:"Wanneer verschillende taken tegelijk aandacht vragen, levert een eerste beoordeling van de cliënt vaak de meeste informatie op. Door eerst gegevens te verzamelen wordt duidelijk welke vervolgstappen nodig zijn."
+},
+
+{
+t:"Signalen herkennen",
+h:"Belangrijke aanwijzingen worden niet altijd uitgesproken. Veranderingen in houding, concentratie, motoriek, gezichtsuitdrukking of lichamelijke reacties kunnen wijzen op een onderliggend probleem."
+},
+
+{
+t:"Waarden interpreteren",
+h:"Meetresultaten zijn pas echt bruikbaar wanneer ze worden vergeleken met de normale referentiewaarden. Bedenk welke afwijkingen direct aandacht vereisen en welke ruimte laten voor verder onderzoek."
+},
+
+{
+t:"Gevolgen voorkomen",
+h:"Een situatie die aanvankelijk beperkt lijkt, kan zich sneller ontwikkelen dan verwacht. Vroege herkenning van afwijkingen speelt daarom vaak een grotere rol dan de uiteindelijke behandeling."
+}
+
+];
+
+const list = document.getElementById("list");
+
+hints.forEach((hint,index)=>{
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<h3>${hint.t}</h3>
+<p>Open aanwijzing</p>
+`;
+
+card.addEventListener("click", () => {
+openHint(index);
+});
+
+list.appendChild(card);
+
+});
+
+function openHint(index){
+
+document.getElementById("title").textContent =
+hints[index].t;
+
+document.getElementById("content").textContent =
+hints[index].h;
+
+document.getElementById("popup").style.display =
+"flex";
+
+}
+
+function closeHint(){
+
+document.getElementById("popup").style.display =
+"none";
+
+}
+
+</script>
+
+</body>
+</html>
